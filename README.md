@@ -6,6 +6,7 @@ This program is used to see names of accounts who have followed and who have unf
 This will also work for private accounts under 2 conditions.
 1. You log in with the private account you want to check
 2. The account you use to log in is following the private account you want to check.
+
 If the account is public that you want to check, you can login with any account and
 still check said accounts followers.
 The code works by storing a set of all the followers that an account has in the Documents folder
