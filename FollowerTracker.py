@@ -11,7 +11,7 @@
 # If the new followers is missing someone from the old followers, that means they unfollowed and that is 
 # output to the user. Vice versa is true for followers.
 
-import instaloader # Crazy cool module very useful for instagram automation
+import instaloader # Cool module very useful for instagram automation
 import os
 
 # Login to instagram
@@ -35,41 +35,36 @@ print(f'\nLoading...\n')
 profile=instaloader.Profile.from_username(L.context,CHECKING)
 
 # Print list of followers
-follow_set=set()
+follower_set=set()
 for follower in profile.get_followers():
-    follow_set.add(follower.username)
+    follower_set.add(follower.username)
 if not os.path.exists(f'/Users/{COMPUTER}/Documents/FollowerChecker/{CHECKING}\'sfollowers.txt'):
-    file=open(f'/Users/{COMPUTER}/Documents/FollowerChecker/{CHECKING}\'sfollowers.txt','w+')
-    for follower in follow_set:
+    file=open(f'/Users/{COMPUTER}/Documents/FollowerChecker/{CHECKING}\'sfollowers.txt','w')
+    for follower in follower_set:
         file.write(f'{follower}\n')
     file.close()
-    print(f'{len(follow_set)} people are following {CHECKING}')
+    print(f'{len(follower_set)} people are following {CHECKING}')
     print(f'Followers list saved to {CHECKING}\'sfollowers.txt in Documents')
     print(f'\nStarted tracking {CHECKING}\'s followers.')
 else:
-    file=open(f'/Users/{COMPUTER}/Documents/FollowerChecker/{CHECKING}\'sfollowers.txt','r')
-    old_followers=set(file.readlines())
-    file.close()
-    file=open(f'/Users/{COMPUTER}/Documents/FollowerChecker/{CHECKING}\'sfollowers.txt','w+')
-    for follower in follow_set:
+    file=open(f'/Users/{COMPUTER}/Documents/FollowerChecker/{CHECKING}\'sfollowers.txt','r+')
+    old_followers=set(file.read().splitlines())
+    new_followers=follower_set-old_followers
+    for follower in follower_set:
         file.write(f'{follower}\n')
     file.close()
-    file=open(f'/Users/{COMPUTER}/Documents/FollowerChecker/{CHECKING}\'sfollowers.txt','r')
-    new_followers=set(file.readlines())
-    file.close()
-    only_new_followers=new_followers-old_followers
-    for people in only_new_followers:
+    for people in new_followers:
         print(f'{people[0:-1]} has followed {USERNAME}')
-    if len(only_new_followers)==1:
+    if len(new_followers)==1:
         print(f'{1} person has followed {USERNAME}\n')
     else:
-        print(f'{len(only_new_followers)} people have followed {USERNAME}\n')
-    only_old_followers=old_followers-new_followers
+        print(f'{len(new_followers)} people have followed {USERNAME}\n')
+    only_old_followers=old_followers-follower_set
     for people in only_old_followers:
         print(f'{people[0:-1]} has unfollowed {USERNAME}')
     if len(only_old_followers)==1:
         print(f'{1} person has unfollowed {USERNAME}')
     else:
         print(f'{len(only_old_followers)} people have unfollowed {USERNAME}')
-    print(f'\n{len(new_followers)} people are following {USERNAME}')
+    print(f'\n{len(follower_set)} people are following {USERNAME}')
     print(f'Followers list saved to {CHECKING}\'s_followers.txt in Documents\n')
