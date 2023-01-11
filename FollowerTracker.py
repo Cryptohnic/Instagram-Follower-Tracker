@@ -54,14 +54,14 @@ else:
         file.write(f'{follower}\n')
     file.close()
     for people in new_followers:
-        print(f'{people[0:-1]} has followed {USERNAME}')
+        print(f'{people} has followed {USERNAME}')
     if len(new_followers)==1:
         print(f'{1} person has followed {USERNAME}\n')
     else:
         print(f'{len(new_followers)} people have followed {USERNAME}\n')
     only_old_followers=old_followers-follower_set
     for people in only_old_followers:
-        print(f'{people[0:-1]} has unfollowed {USERNAME}')
+        print(f'{people} has unfollowed {USERNAME}')
     if len(only_old_followers)==1:
         print(f'{1} person has unfollowed {USERNAME}')
     else:
