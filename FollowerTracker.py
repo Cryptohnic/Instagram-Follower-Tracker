@@ -47,12 +47,14 @@ if not os.path.exists(f'/Users/{COMPUTER}/Documents/FollowerChecker/{CHECKING}\'
     print(f'Followers list saved to {CHECKING}\'sfollowers.txt in Documents')
     print(f'\nStarted tracking {CHECKING}\'s followers.')
 else:
-    file=open(f'/Users/{COMPUTER}/Documents/FollowerChecker/{CHECKING}\'sfollowers.txt','r+')
+    file=open(f'/Users/{COMPUTER}/Documents/FollowerChecker/{CHECKING}\'sfollowers.txt','r')
     old_followers=set(file.read().splitlines())
-    new_followers=follower_set-old_followers
+    file.close()
+    file=open(f'/Users/{COMPUTER}/Documents/FollowerChecker/{CHECKING}\'sfollowers.txt','w')
     for follower in follower_set:
         file.write(f'{follower}\n')
     file.close()
+    new_followers=follower_set-old_followers
     for people in new_followers:
         print(f'{people} has followed {USERNAME}')
     if len(new_followers)==1:
